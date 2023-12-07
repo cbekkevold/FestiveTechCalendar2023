@@ -16,8 +16,33 @@ Install-Module Microsoft.Graph.Beta
 
 ## Scripts in this repository
 
+You can run all scripts by default, no changes needed if you accept my conditions.
+Scopes are set for every script, but you might need to have administrator role(s) too.
+
 ### GetApplicationInformation.ps1
+
+This script is built on Microsofts own example: [Export app registrations with expiring secrets and certificates](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/scripts/powershell-export-apps-with-expiring-secrets)
+But i wanted more information, so i have rewrited it to fit my needs. And you can also use this information to maybe clean up som old applications that are not used anymore, or not working because of expired secrets/certificates. My default is to check for secrets or certificates that expire within the next 60 days, but you can change this to whatever you want.
+Explanation for columns in Excel-file:
+
+- ApplicationName: Display name of application in Entra ID
+- ApplicationID: Application Id / Client Id of the application
+- Expired secrets/soon to expire:
+  - True: One or more secrets are about to expire
+  - False: No secrets are about to expire
+  - "No secrets found": Application don't have secrets.
+- Expired certs/soon to expire:
+  - True: One or more secrets are about to expire
+  - False: No secrets are about to expire
+  - "No secrets found": Application don't have secrets.
+- Owner: User principal name for owner(s). "No owner" if no owners are found.
+- Created: Creation time for the application
+- PublisherDomain: domain the app is published to.
+- SignInAudience: Who can use the application? Will be one of these supported account types: AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount
+- LastSignIn: Date time of last sign in, or "N/A" if there are no signings
 
 ### RemoveGuestAccounts.ps1
 
 ### GetRoleAssignments.ps1
+
+This script gets all role assignments trough Privileged Identity Management (PIM). Both Entra Role Assignments and Group Assignments.
