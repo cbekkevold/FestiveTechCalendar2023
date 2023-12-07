@@ -1,6 +1,6 @@
 Connect-MgGraph -Scopes AuditLog.Read.All, Application.Read.All
 $DaysToExpiration = "60"
-$FilePath = "<YOURPATHHERE>\EntraIDApplications.xlsx"
+$FilePath = "EntraIDApplications.xlsx"
 $Now = Get-Date
 $Report = @()
 $AppCounter = 1
