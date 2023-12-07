@@ -3,11 +3,11 @@ $FilePath = "<YOURPATHHERE>\RoleAssignments.xlsx"
 $AllAssignments = @()
 $AllGroupAssignments = @()
 $PimGroups = @()
-$RoleDefinitions = Get-MgRoleManagementDirectoryRoleDefinition 
+$RoleDefinitions = Get-MgRoleManagementDirectoryRoleDefinition -All
 
 # PIM : Eligible assignments
 Write-Host "Working eith eligible assignments!"
-$EligibleAssignments = Get-MgRoleManagementDirectoryRoleEligibilityScheduleInstance
+$EligibleAssignments = Get-MgRoleManagementDirectoryRoleEligibilityScheduleInstance -All
 foreach ($assignment in $EligibleAssignments) {
     $MFA = "N/A"
     $SyncStatus = "N/A"
@@ -52,7 +52,7 @@ foreach ($assignment in $EligibleAssignments) {
 
 # PIM : Active assignments
 Write-Host "Working with active assignments!"
-$ActiveAssignments = Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance 
+$ActiveAssignments = Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance -All
 foreach ($assignment in $ActiveAssignments) {
     $MFA = "N/A"
     $SyncStatus = "N/A"
@@ -99,7 +99,7 @@ foreach ($assignment in $ActiveAssignments) {
 # PIM : Group Assignments
 Write-Host "Working with group assignments!"
 foreach ($group in $PimGroups) {
-    $groupAssignment = Get-MgIdentityGovernancePrivilegedAccessGroupAssignmentScheduleInstance -Filter "groupId eq '$group'"
+    $groupAssignment = Get-MgIdentityGovernancePrivilegedAccessGroupAssignmentScheduleInstance -All -Filter "groupId eq '$group'"
     foreach ($member in $groupAssignment) {
         $thisMember = Get-MgUser -User $member.PrincipalId
         $thisGroup = Get-MgGroup -GroupId $group
@@ -107,6 +107,8 @@ foreach ($group in $PimGroups) {
         $tempObject = [pscustomobject]@{
             UserPrincipalName = $thisMember.UserPrincipalName
             Group             = $thisGroup.DisplayName
+            RoleStartDate     = $member.StartDateTime
+            RoleEndDate       = $member.EndDateTime
         }
         $AllGroupAssignments += $tempObject
     }
