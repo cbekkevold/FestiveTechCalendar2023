@@ -5,7 +5,7 @@ $AllGroupAssignments = @()
 $PimGroups = @()
 $RoleDefinitions = Get-MgRoleManagementDirectoryRoleDefinition -All
 
-# PIM : Eligible assignments
+# Eligible assignments
 Write-Host "Working eith eligible assignments!"
 $EligibleAssignments = Get-MgRoleManagementDirectoryRoleEligibilityScheduleInstance -All
 foreach ($assignment in $EligibleAssignments) {
@@ -50,7 +50,7 @@ foreach ($assignment in $EligibleAssignments) {
     $AllAssignments += $tempObject
 }
 
-# PIM : Active assignments
+# Active assignments
 Write-Host "Working with active assignments!"
 $ActiveAssignments = Get-MgRoleManagementDirectoryRoleAssignmentScheduleInstance -All
 foreach ($assignment in $ActiveAssignments) {
@@ -96,7 +96,7 @@ foreach ($assignment in $ActiveAssignments) {
     }
 }
 
-# PIM : Group Assignments
+# Group Assignments
 Write-Host "Working with group assignments!"
 foreach ($group in $PimGroups) {
     $groupAssignment = Get-MgIdentityGovernancePrivilegedAccessGroupAssignmentScheduleInstance -All -Filter "groupId eq '$group'"
