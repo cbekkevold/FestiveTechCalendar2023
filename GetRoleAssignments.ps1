@@ -1,4 +1,4 @@
-Connect-MgGraph -Scopes PrivilegedAssignmentSchedule.Read.AzureADGroup, RoleEligibilitySchedule.Read.Directory, RoleAssignmentSchedule.Read.Directory
+Connect-MgGraph -Scopes PrivilegedAssignmentSchedule.Read.AzureADGroup, RoleEligibilitySchedule.Read.Directory, RoleAssignmentSchedule.Read.Directory, UserAuthenticationMethod.Read.All, RoleManagement.Read.All
 $FilePath = "RoleAssignments.xlsx"
 $AllAssignments = @()
 $AllGroupAssignments = @()
